@@ -47,8 +47,8 @@ int main(int argc, char** argv)
                 return EXIT_FAILURE;
         }
         //test copy constructor
-        mi::octree<int> tree2 = tree;
-
+        mi::octree<int> tree2(1024, 0);
+        tree2.set(1,3,4, 10);
         if ( tree2.get(1,3,4) != 10 ) {
                 std::cerr<<"Error at mi::octree<int>::get() "<<tree2.get(1,3,4)<<std::endl;
                 return EXIT_FAILURE;

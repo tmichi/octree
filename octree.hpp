@@ -52,10 +52,10 @@ POSSIBILITY OF SUCH DAMAGE.
 namespace mi
 {
         /**
-        * @class octree
-        * octree implements octree data structure.
-        * @section ex Example code
-        * @code
+	 * @class octree
+	 * octree implements octree data structure.
+	 * @section ex Example code
+	 * @code
         * #include <octree.hpp>
         * int main ()
         * {
@@ -334,6 +334,9 @@ namespace mi
                 int		_dimension; ///< Size of the octree.
                 T		_emptyValue; ///< Empty value of the octree.
                 node<T>*	_root; ///< A pointer to root pointer.
+	private:
+		octree ( const octree<T>& that);
+		void operator = ( const octree<T>& that);
         public:
                 /**
                 * @brief Default constructor.
@@ -351,15 +354,7 @@ namespace mi
                         this->init(dimension, emptyValue);
                         return;
                 }
-                /**
-                * @brief Copy constructor
-                * @param[in] d Copying object.
-                */
-                octree ( const octree &d ) {
-                        this->_root = NULL;
-                        this->copy(d);
-                        return;
-                }
+
                 /**
                 * @brief Destructor
                 */
@@ -367,17 +362,6 @@ namespace mi
                         if ( this->_root != NULL ) delete _root;
                         return;
                 }
-
-                /**
-                * @brief = operator
-                * @param[in] d Copying object
-                * @return Copied object.
-                */
-                octree& operator = (const octree& d) {
-                        this->copy(d);
-                        return *this;
-                }
-
                 /**
                 * @param[in] dimension dimension of the octree
                 * @param[in] emptyValue the default value of the octree
@@ -525,14 +509,6 @@ namespace mi
                         return this->_root->write(fout);
                 }
         private:
-                /**
-                * @brief Copying objects (used in copy constructor and = operator).
-                */
-                void copy ( const octree<T>& d) {
-                        this->init(d._dimension, d._emptyValue);
-                        this->_root->copy( *(d._root) );
-                        return;
-                }
                 /**
                 * @brief get the maximum level of the octree
                 * @param[in] dimension dimension of the octree
